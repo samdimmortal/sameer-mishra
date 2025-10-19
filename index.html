@@ -52,53 +52,6 @@
 
 			</div>
 		</div>
-		<!-- AI Chat Widget -->
-		<div id="ai-chat-widget">
-		  <div id="chat-header">AI Chat</div>
-		  <div id="chat-messages"></div>
-		  <input type="text" id="chat-input" placeholder="Ask here..." />
-		  <button id="chat-send">Send</button>
-		</div>
-		<script>
-		const messages = document.getElementById('chat-messages');
-		const input = document.getElementById('chat-input');
-		const sendBtn = document.getElementById('chat-send');
-		let visitorEmail = "";
-
-		// Replace this with your Vercel serverless endpoint
-		const VERCEL_API = "https://sameer-mishra.vercel.app/api/chat";
-
-		function addMessage(sender, text) {
-		  const msg = document.createElement('div');
-		  msg.textContent = `${sender}: ${text}`;
-		  messages.appendChild(msg);
-		  messages.scrollTop = messages.scrollHeight;
-		}
-
-		async function callAI(message, visitorEmail) {
-		  const response = await fetch(VERCEL_API, {
-		    method: "POST",
-		    headers: { "Content-Type": "application/json" },
-		    body: JSON.stringify({ message, visitorEmail })
-		  });
-		  const data = await response.json();
-		  return data.reply;
-		}
-
-		sendBtn.addEventListener('click', async () => {
-		  const userText = input.value.trim();
-		  if (!userText) return;
-
-		  addMessage("Du", userText);
-		  
-		  if (!visitorEmail) {
-		    visitorEmail = prompt("Var vänlig ange din email:");
-		  }
-
-		  const reply = await callAI(userText, visitorEmail);
-		  addMessage("AI", reply);
-		});
-		</script>
 		<script>
 			window.onload = function() { document.body.classList.remove('is-preload'); }
 			window.ontouchmove = function() { return false; }
